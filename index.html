@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Selamat Hari Natal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* VIDEO BACKGROUND */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* OVERLAY GELAP */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: -1;
+    }
+
+    .container {
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      color: white;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .tree {
+      font-size: 4.5rem;
+      animation: swing 3s infinite ease-in-out;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #ffeb3b;
+      margin: 10px 0;
+      text-shadow: 0 0 10px rgba(255,235,59,0.9);
+    }
+
+    .receiver {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    #giftBtn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 30px;
+      background: #e53935;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    }
+
+    #giftBtn:active {
+      transform: scale(0.96);
+    }
+
+    .gift-message {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      animation: fadeIn 1s ease;
+    }
+
+    /* BONEKA SALJU */
+    .snowman {
+      font-size: 5rem;
+      margin: 15px 0;
+      animation: snowmanMove 2s infinite alternate ease-in-out;
+    }
+
+    /* SALJU */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      user-select: none;
+      animation: fall linear infinite;
+      opacity: 0.9;
+      z-index: 1;
+    }
+
+    .footer {
+      margin-top: 15px;
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh); }
+    }
+
+    @keyframes swing {
+      0%,100% { transform: rotate(0deg); }
+      50% { transform: rotate(4deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes snowmanMove {
+      0% { transform: translateX(-15px) rotate(-4deg); }
+      100% { transform: translateX(15px) rotate(4deg); }
+    }
+
+    @media (max-width: 360px) {
+      h1 { font-size: 1.9rem; }
+      .tree { font-size: 4rem; }
+      .snowman { font-size: 4.2rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- VIDEO BACKGROUND -->
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="https://cdn.pixabay.com/vimeo/778478506/christmas-145038.mp4?width=1280&hash=9e1f1d16d7b9fa1c60c1a3e58d9bb1a4c2c66c93" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="container">
+    <div class="card">
+      <div class="tree">🎄</div>
+      <h1>Selamat Hari Natal</h1>
+
+      <div class="receiver">
+        Untuk: <b>Jenny Stefanie, S.E.</b> 🎅
+      </div>
+
+      <button id="giftBtn">🎁 Buka Kado Natal</button>
+
+      <div class="footer">© 2025 - Ucapan Natal</div>
+    </div>
+  </div>
+
+  <!-- AUDIO -->
+  <audio id="natalSong" src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Christmas/We_Wish_You_a_Merry_Christmas/Christmas_-_We_Wish_You_a_Merry_Christmas.mp3"></audio>
+  <audio id="voice" src="https://www.myinstants.com/media/sounds/merry-christmas.mp3"></audio>
+
+  <script>
+    // Salju jatuh
+    for (let i = 0; i < 35; i++) {
+      const snow = document.createElement("div");
+      snow.className = "snowflake";
+      snow.innerHTML = "❄";
+      snow.style.left = Math.random() * 100 + "vw";
+      snow.style.fontSize = Math.random() * 10 + 10 + "px";
+      snow.style.animationDuration = Math.random() * 3 + 2 + "s";
+      document.body.appendChild(snow);
+    }
+
+    // Tombol kado
+    const btn = document.getElementById("giftBtn");
+    const song = document.getElementById("natalSong");
+    const voice = document.getElementById("voice");
+
+    btn.addEventListener("click", () => {
+      song.play();
+      voice.play();
+      btn.remove();
+
+      const msg = document.createElement("div");
+      msg.className = "gift-message";
+      msg.innerHTML = `
+        🎁 <b>Kado Terbuka!</b><br>
+        <div class="snowman">☃️</div>
+        <b>Boneka Salju Natal</b><br>
+        Selamat Hari Natal & Merry Christmas 🤍❄️
+      `;
+      document.querySelector(".card").appendChild(msg);
+    });
+  </script>
+
+</body>
+</html>
